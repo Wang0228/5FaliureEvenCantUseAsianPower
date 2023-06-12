@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Customer Service AI\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj": {}
+    "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj": {}
   },
   "projects": {
-    "D:\\Customer Service AI\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj": {
+    "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Customer Service AI\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
+        "projectUniqueName": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
         "projectName": "Mvc5_AI",
-        "projectPath": "D:\\Customer Service AI\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
-        "packagesPath": "C:\\Users\\Double.J\\.nuget\\packages\\",
-        "outputPath": "D:\\Customer Service AI\\Mvc5_AI\\Mvc5_AI\\obj\\",
+        "projectPath": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
+        "packagesPath": "C:\\Users\\a0966\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Double.J\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\a0966\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,6 +44,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.Owin": {
+              "target": "Package",
+              "version": "[4.2.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
