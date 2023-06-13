@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "23oyUf6nWWI6KtKUOYHA+1c/B+RQIMtkTMSo6gpWokym5PsTUL6ztEB3sJ2XlhvapfZXp+WLOaPgUvovrf7X2Q==",
+  "dgSpecHash": "FztIphz4dBDQe4SHQ3uUuMO9ImClzTr6gBodqMaZkM72x+t8DewVk1kiPigh9l8KOpba3ib/VFhW9JFtEf58mg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
+  "projectFilePath": "D:\\0613\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\a0966\\.nuget\\packages\\microsoft.owin\\4.2.2\\microsoft.owin.4.2.2.nupkg.sha512",
-    "C:\\Users\\a0966\\.nuget\\packages\\owin\\1.0.0\\owin.1.0.0.nupkg.sha512"
+    "C:\\Users\\Double.J\\.nuget\\packages\\microsoft.owin\\4.2.2\\microsoft.owin.4.2.2.nupkg.sha512",
+    "C:\\Users\\Double.J\\.nuget\\packages\\owin\\1.0.0\\owin.1.0.0.nupkg.sha512"
   ],
   "logs": [
     {
