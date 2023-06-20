@@ -13,51 +13,6 @@
     <link rel="stylesheet" href="./interface.css">
 </head>
 <body>
-    <div id="gary" style="display:none;">
-        <div class="form-container">
-            <div class="switch-buttons">
-                <button class="active" id="login-btn">登入</button>
-                <button id="register-btn">註冊</button>
-                <button id="close-btn">X</button>
-
-            </div>
-            <div class="form-wrapper">
-                <form id="login-form">
-                    <h2>登入</h2>
-                    <div class="input-group">
-                        <label for="login-email">Email:</label>
-                        <input type="email" id="login-email" name="email" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="login-password">密碼:</label>
-                        <input type="password" id="login-password" name="password" required>
-                    </div>
-                    <button type="submit">登入</button>
-                </form>
-                <form id="register-form" style="display: none">
-                    <h2>註冊</h2>
-                    <div class="input-group">
-                        <label for="register-email">Email:</label>
-                        <input type="email" id="register-email" name="email" required>
-                        <button type="button" id="send-code-btn">寄送驗證碼</button>
-                    </div>
-                    <div class="input-group">
-                        <label for="code">驗證碼:</label>
-                        <input type="text" id="code" name="code" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="register-password">Password:</label>
-                        <input type="password" id="register-password" name="password" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="confirm-password">Confirm Password:</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required>
-                    </div>
-                    <button type="submit">註冊</button>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="header">
         <ul class="headinfo">
             <li><img src="https://media1.giphy.com/media/7kn27lnYSAE9O/200.webp?cid=ecf05e47mwx2cuu86ct9i80fhmbahffgmbvl4uq2i6o0b0rq&rid=200.webp&ct=g" alt=""></li>
@@ -66,7 +21,12 @@
             <li><a asp-controller="Reports" asp-action="UserReport">QAgpt</a></li>
         </ul>
         <ul class="account" id="account">
-            @*@if (User.Identity.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li><a asp-controller="Users" asp-action="Signout" class="btn btn-primary me-2">@User.Identity.Name</a></li>
+                <li>@Html.ActionLink("登出", "Signout","Users", null, new { @class="btn btn-danger"})</li>
+            }
+            else
             {
                 <li>
                     <a class="Create" asp-controller="Users" asp-action="Create">Sign up</a>
@@ -75,13 +35,6 @@
                     <a class="login" asp-controller="Users" asp-action="Login">Log in</a>
                 </li>
             }
-            else
-            {
-                <li><a href="#" class="btn btn-primary me-2">@User.Identity.Name</a></li>
-                <li>@Html.ActionLink("登出", "Index","Users", null, new { @class="btn btn-danger"})</li>
-            }*@
-            <li><a href="#" class="btn btn-primary me-2">@User.Identity.Name</a></li>
-            <li>@Html.ActionLink("登出", "Index","Users", null, new { @class="btn btn-danger"})</li>
             <li>
                 <select name="language" id="language">
                     <option value="zh" selected>Chinese</option>

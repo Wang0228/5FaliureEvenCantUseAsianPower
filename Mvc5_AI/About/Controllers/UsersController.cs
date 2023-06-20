@@ -13,6 +13,8 @@ using System.Security.Claims;
 using About.Data;
 using About.Services;
 using About.Interface;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 
 namespace About.Controllers
 {
@@ -29,6 +31,7 @@ namespace About.Controllers
             _hashService = hashService;
 
         }
+
 
         // GET: Users
         public async Task<IActionResult> Index()
@@ -55,6 +58,7 @@ namespace About.Controllers
         }
 
         // GET: Users/Create
+        
         public IActionResult Create()
         {
             return View();
@@ -65,6 +69,7 @@ namespace About.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> Create([Bind("Name,Email,Password,PasswordConfirmed")] User user)
         {
             if (ModelState.IsValid)
@@ -95,6 +100,7 @@ namespace About.Controllers
         }
 
         // GET: Users/Edit/5
+       
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -115,6 +121,7 @@ namespace About.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+     
         public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Email,Password,PasswordConfirmed")] User user)
         {
             if (id != user.Id)
@@ -146,6 +153,7 @@ namespace About.Controllers
         }
 
         // GET: Users/Delete/5
+        
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -166,6 +174,7 @@ namespace About.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var user = await _ctx.Users.FindAsync(id);
@@ -262,14 +271,16 @@ namespace About.Controllers
                 ViewBag.ErrorMessage = "Login failed: Incorrect password.";
                 return View();
             }
-
             // Successful login.
             ViewBag.SuccessMessage = "Login successful!";
             return View();
-
-
         }
 
-        
+        //登出
+        public async Task<IActionResult> Signout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return LocalRedirect("/Users/Index");
+        }
     }
 }

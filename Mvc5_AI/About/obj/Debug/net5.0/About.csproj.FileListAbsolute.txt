@@ -335,3 +335,4 @@ C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\About\obj\Debu
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\About\obj\Debug\net5.0\refint\About.dll
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\About\obj\Debug\net5.0\Razor\Views\Shared\_loginStatusPartial.cshtml.g.cs
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\About\obj\Debug\net5.0\Razor\Views\Reports\Home.cshtml.g.cs
+C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\About\obj\Debug\net5.0\Razor\Views\Users\Signout.cshtml.g.cs

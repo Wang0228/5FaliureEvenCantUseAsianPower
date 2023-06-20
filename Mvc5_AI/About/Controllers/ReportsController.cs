@@ -6,10 +6,12 @@ namespace About.Controllers
 {
     public class ReportsController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
+        [Authorize]
         public IActionResult Home()
         {
             return View();
@@ -26,5 +28,7 @@ namespace About.Controllers
         {
             return View();
         }
+
+
     }
 }

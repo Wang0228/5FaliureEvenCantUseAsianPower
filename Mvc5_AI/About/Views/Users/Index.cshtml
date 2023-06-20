@@ -29,17 +29,17 @@
 
             @if (User.Identity.IsAuthenticated)
             {
+                <li><a asp-controller="Users" asp-action="Signout" class="btn btn-primary me-2">@User.Identity.Name</a></li>
+                <li>@Html.ActionLink("登出", "Signout","Users", null, new { @class="btn btn-danger"})</li>
+            }
+            else
+            {
                 <li>
                     <a class="Create" asp-controller="Users" asp-action="Create">Sign up</a>
                 </li>
                 <li>
                     <a class="login" asp-controller="Users" asp-action="Login">Log in</a>
                 </li>
-            }
-            else
-            {
-                <li><a href="#" class="btn btn-primary me-2">@User.Identity.Name</a></li>
-                <li>@Html.ActionLink("登出", "Index","Users", null, new { @class="btn btn-danger"})</li>
             }
             <li>
                 <select name="language" id="language">
