@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6eaFCXy0Qau6OISSeHhun8bF1EA13DB4btVnvCZpCfOTOLREgO1rHbIwqOLmt72GAPCl6hkSYBznfuA9szfefg==",
+  "dgSpecHash": "ixckvPaAA85W0ksjHWUlddqXI335mI2OPUU9eHp7vkBfe0ozXADcrP8/74PUB5NT2x6TLmkU/jC1boWeKVTojw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower-Register\\Mvc5_AI\\About\\About.csproj",
+  "projectFilePath": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\About\\About.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\a0966\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\a0966\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.17\\microsoft.aspnetcore.cryptography.internal.5.0.17.nupkg.sha512",

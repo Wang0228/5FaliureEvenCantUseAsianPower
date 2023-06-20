@@ -20,11 +20,6 @@ C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\De
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\Mvc5_AI.RazorAssemblyInfo.cs
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\scopedcss\bundle\Mvc5_AI.styles.css
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\staticwebassets\Mvc5_AI.StaticWebAssets.Manifest.cache
-C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\staticwebassets\Mvc5_AI.StaticWebAssets.Pack.cache
-C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\staticwebassets\msbuild.Mvc5_AI.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\staticwebassets\msbuild.build.Mvc5_AI.props
-C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\staticwebassets\msbuild.buildMultiTargeting.Mvc5_AI.props
-C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\staticwebassets\msbuild.buildTransitive.Mvc5_AI.props
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\Mvc5_AI.TagHelpers.input.cache
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\Mvc5_AI.TagHelpers.output.cache
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\Mvc5_AI.RazorCoreGenerate.cache
@@ -86,3 +81,4 @@ C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower-Register\Mvc5_AI\Mvc5_
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower-Register\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\Mvc5_AI.pdb
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower-Register\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\Mvc5_AI.genruntimeconfig.cache
 C:\Users\a0966\source\repos\5FaliureEvenCantUseAsianPower-Register\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\ref\Mvc5_AI.dll
+C:\Users\a0966\Source\Repos\5FaliureEvenCantUseAsianPower\Mvc5_AI\Mvc5_AI\obj\Debug\net5.0\staticwebassets\Mvc5_AI.StaticWebAssets.xml

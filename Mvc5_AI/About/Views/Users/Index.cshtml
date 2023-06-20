@@ -4,11 +4,6 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,17 +20,27 @@
                 <img src="https://media1.giphy.com/media/7kn27lnYSAE9O/200.webp?cid=ecf05e47mwx2cuu86ct9i80fhmbahffgmbvl4uq2i6o0b0rq&rid=200.webp&ct=g"
                      alt="">
             </li>
-            <li><a href="./interface.html">Home</a></li>
-            <li><a href="./aboutus.html">about us</a></li>
-            <li><a href="./QAgpt.html">QAgpt</a></li>
+            <li><a asp-controller="Reports" asp-action="Home">Home</a></li>
+            <li><a asp-controller="Users" asp-action="Index">about us</a></li>
+            <li><a asp-controller="Reports" asp-action="UserReport">QAgpt</a></li>
         </ul>
         <ul class="account" id="account">
-            <li>
-                <a class="sign" asp-controller="Users" asp-action="Create">Sign up</a>
-            </li>
-            <li>
-                <a class="login" asp-controller="Users" asp-action="Login">Log in</a>
-            </li>
+            
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>
+                    <a class="Create" asp-controller="Users" asp-action="Create">Sign up</a>
+                </li>
+                <li>
+                    <a class="login" asp-controller="Users" asp-action="Login">Log in</a>
+                </li>
+            }
+            else
+            {
+                <li><a href="#" class="btn btn-primary me-2">@User.Identity.Name</a></li>
+                <li>@Html.ActionLink("登出", "Index","Users", null, new { @class="btn btn-danger"})</li>
+            }
             <li>
                 <select name="language" id="language">
                     <option value="zh" selected>Chinese</option>
@@ -286,7 +291,7 @@
                     box-shadow: 5px 5px gray;
                 }
 
-            .header .account .sign {
+            .header .account .Create {
                 background-color: #66CCFF;
                 border: 0px;
                 border-radius: 5px;

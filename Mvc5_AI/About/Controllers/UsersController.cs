@@ -7,22 +7,33 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using About.Models;
 using About.ViewModel;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using About.Data;
+using About.Services;
+using About.Interface;
 
 namespace About.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly UserContext _context;
+        private readonly AccountContext _ctx;
+        private readonly AccountServices _accountServices;
+        private readonly IHashService _hashService;
 
-        public UsersController(UserContext context)
+        public UsersController(AccountContext ctx, AccountServices accountServices, IHashService hashService)
         {
-            _context = context;
+            _ctx = ctx;
+            _accountServices = accountServices;
+            _hashService = hashService;
+
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _ctx.Users.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -33,7 +44,7 @@ namespace About.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var user = await _ctx.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -54,11 +65,12 @@ namespace About.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,PasswordConfirmed")] User user)
+        public async Task<IActionResult> Create([Bind("Name,Email,Password,PasswordConfirmed")] User user)
         {
             if (ModelState.IsValid)
             {
-                var existingUser = await _context.User.SingleOrDefaultAsync(u => u.Email == user.Email);
+                
+                var existingUser = await _ctx.Users.SingleOrDefaultAsync(u => u.Email == user.Email);
                 if (existingUser != null)
                 {
                     // Email already exists in the database
@@ -67,9 +79,14 @@ namespace About.Controllers
                 }
                 else
                 {
+                    // Set the user ID based on the current Unix timestamp
+                    long unixTimestampMilliseconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                    user.Id = unixTimestampMilliseconds.ToString();
+                    user.Password = _hashService.MD5Hash(user.Password);
+                    user.PasswordConfirmed = _hashService.MD5Hash(user.PasswordConfirmed);
                     // Email does not exist, proceed with creating the new user
-                    _context.Add(user);
-                    await _context.SaveChangesAsync();
+                    _ctx.Add(user);
+                    await _ctx.SaveChangesAsync();
                     ViewBag.SuccessMessage = "Signin successful!";
                     return RedirectToAction(nameof(Index));
                 }
@@ -85,7 +102,7 @@ namespace About.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
+            var user = await _ctx.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -109,8 +126,8 @@ namespace About.Controllers
             {
                 try
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    _ctx.Update(user);
+                    await _ctx.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -136,7 +153,7 @@ namespace About.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var user = await _ctx.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -151,15 +168,15 @@ namespace About.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
+            var user = await _ctx.Users.FindAsync(id);
+            _ctx.Users.Remove(user);
+            await _ctx.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(string id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _ctx.Users.Any(e => e.Id == id);
         }
 
         [HttpGet]
@@ -168,15 +185,68 @@ namespace About.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginvm)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(); // Return the view with validation errors.
+
+                ApplicationUser user1 = await _accountServices.AuthenticateUser(loginvm);
+
+                if (user1 == null)
+                {
+                    ModelState.AddModelError(string.Empty, "帳號密碼有錯!!!");
+                    return View(loginvm);
+                }
+
+
+                //Success
+                //通過以上帳密比對成立後, 以下開始建立授權
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user1.Name),
+                    new Claim(ClaimTypes.Role, user1.Role)   
+                    //new Claim(ClaimTypes.Role, user.Role) // 如果要有「群組、角色、權限」，可以加入這一段  
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    //AllowRefresh = <bool>,
+                    // Refreshing the authentication session should be allowed.
+
+                    //ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                    // The time at which the authentication ticket expires. A 
+                    // value set here overrides the ExpireTimeSpan option of 
+                    // CookieAuthenticationOptions set with AddCookie.
+
+                    //IsPersistent = true,
+                    // Whether the authentication session is persisted across 
+                    // multiple requests. When used with cookies, controls
+                    // whether the cookie's lifetime is absolute (matching the
+                    // lifetime of the authentication ticket) or session-based.
+
+                    //IssuedUtc = <DateTimeOffset>,
+                    // The time at which the authentication ticket was issued.
+
+                    //RedirectUri = <string>
+                    // The full path or absolute URI to be used as an http 
+                    // redirect response value.
+                };
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties
+                    );
+
+                return LocalRedirect("~/Reports/UserReport");
+                
             }
 
             // Find user by email.
-            var user = await _context.User.SingleOrDefaultAsync(u => u.Email == loginvm.Email);
+            var user = await _ctx.Users.SingleOrDefaultAsync(u => u.Email == loginvm.Email);
             if (user == null)
             {
                 // User not found.
@@ -196,6 +266,10 @@ namespace About.Controllers
             // Successful login.
             ViewBag.SuccessMessage = "Login successful!";
             return View();
+
+
         }
+
+        
     }
 }

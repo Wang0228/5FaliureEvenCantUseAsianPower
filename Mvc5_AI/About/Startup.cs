@@ -5,6 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System;
+using Microsoft.AspNetCore.Http;
+using About.Interface;
+using About.Services;
+using About.Data;
 
 namespace About
 {
@@ -20,12 +26,13 @@ namespace About
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
+            services.AddDbContext<AccountContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("AccountContext")));
+
 
             // Register Identity services
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<UserContext>();
+                .AddEntityFrameworkStores<AccountContext>();
 
             // Register authorization services
             services.AddAuthorization();
@@ -36,6 +43,19 @@ namespace About
             // Register Razor pages services
             services.AddRazorPages();
 
+            //加入Cookie驗證, 同時設定選項
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    //預設登入驗證網址為Account/Login, 若想變更才需要設定LoginPath
+                    options.LoginPath = new PathString("/Users/Login");
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+                    options.SlidingExpiration = true;
+                    options.AccessDeniedPath = "/Users/Index";
+                });
+            services.AddTransient<AccountServices>();
+
+            services.AddSingleton<IHashService, HashService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +79,7 @@ namespace About
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
