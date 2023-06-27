@@ -56,6 +56,7 @@ namespace About
             services.AddTransient<AccountServices>();
 
             services.AddSingleton<IHashService, HashService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

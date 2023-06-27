@@ -14,6 +14,7 @@ namespace About.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
+        public DbSet<Embedding> Embedding { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +49,10 @@ namespace About.Data
                 new UserRoles { UserId = "U002", RoleId = "R001" },
                 new UserRoles { UserId = "U003", RoleId = "R001" },
                 new UserRoles { UserId = "U003", RoleId = "R002" }
+                );
+
+            modelBuilder.Entity<Embedding>().HasData(
+                new Embedding { EmbeddingID= "", EmbeddingQuestion="NULL", EmbeddingAnswer="NULL",QA="放問題", EmbeddingVectors="向量"}
                 );
         }
 

@@ -24,6 +24,7 @@ namespace About.Controllers
         private readonly AccountServices _accountServices;
         private readonly IHashService _hashService;
 
+
         public UsersController(AccountContext ctx, AccountServices accountServices, IHashService hashService)
         {
             _ctx = ctx;
@@ -280,7 +281,7 @@ namespace About.Controllers
         public async Task<IActionResult> Signout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return LocalRedirect("/Users/Index");
+            return RedirectToAction("Index");
         }
     }
 }
