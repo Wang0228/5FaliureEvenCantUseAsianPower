@@ -63,24 +63,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\a0966\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\as258\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
+      "projectUniqueName": "C:\\Users\\as258\\Source\\Repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
       "projectName": "Mvc5_AI",
-      "projectPath": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
-      "packagesPath": "C:\\Users\\a0966\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\obj\\",
+      "projectPath": "C:\\Users\\as258\\Source\\Repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
+      "packagesPath": "C:\\Users\\as258\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\as258\\Source\\Repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\a0966\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\as258\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -88,6 +83,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -117,7 +113,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -129,7 +126,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -138,7 +135,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "已使用 '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' 而非專案目標架構 'net5.0' 還原了套件 'Microsoft.Owin 4.2.2'。此套件與您的專案並非完全相容。",
+      "message": "已使用 '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' 而非專案目標架構 'net5.0' 還原了套件 'Microsoft.Owin 4.2.2'。此套件與您的專案並非完全相容。",
       "libraryId": "Microsoft.Owin",
       "targetGraphs": [
         "net5.0"
@@ -148,7 +145,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "已使用 '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' 而非專案目標架構 'net5.0' 還原了套件 'Owin 1.0.0'。此套件與您的專案並非完全相容。",
+      "message": "已使用 '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' 而非專案目標架構 'net5.0' 還原了套件 'Owin 1.0.0'。此套件與您的專案並非完全相容。",
       "libraryId": "Owin",
       "targetGraphs": [
         "net5.0"

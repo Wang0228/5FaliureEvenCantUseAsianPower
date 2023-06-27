@@ -56,12 +56,23 @@ namespace About
             services.AddTransient<AccountServices>();
 
             services.AddSingleton<IHashService, HashService>();
-            
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://127.0.0.1:5500")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("AllowSpecificOrigin");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
