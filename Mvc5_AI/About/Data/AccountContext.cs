@@ -51,9 +51,11 @@ namespace About.Data
                 new UserRoles { UserId = "U003", RoleId = "R002" }
                 );
 
-            modelBuilder.Entity<Embedding>().HasData(
-                new Embedding { EmbeddingID= "", EmbeddingQuestion="NULL", EmbeddingAnswer="NULL",QA="放問題", EmbeddingVectors="向量"}
-                );
+            //modelBuilder.Entity<Embedding>().HasData(
+            //    new Embedding { EmbeddingID = "E0000", EmbeddingQuestion = null, EmbeddingAnswer = null, QA = "QA", EmbeddingVectors = "[123]" }
+
+            //    );
+
         }
 
     }

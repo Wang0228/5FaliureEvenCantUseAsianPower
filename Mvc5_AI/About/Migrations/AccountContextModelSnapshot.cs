@@ -18,6 +18,28 @@ namespace About.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("About.Models.Embedding", b =>
+                {
+                    b.Property<string>("EmbeddingID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EmbeddingAnswer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmbeddingQuestion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmbeddingVectors")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmbeddingID");
+
+                    b.ToTable("Embedding");
+                });
+
             modelBuilder.Entity("About.Models.Role", b =>
                 {
                     b.Property<string>("Id")
