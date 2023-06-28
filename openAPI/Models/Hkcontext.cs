@@ -4,22 +4,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace openAPI.Models;
 
-public partial class Hkcontext : DbContext
+public partial class HKContext : DbContext
 {
-    public Hkcontext()
+    public HKContext()
     {
     }
 
-    public Hkcontext(DbContextOptions<Hkcontext> options)
+    public HKContext(DbContextOptions<HKContext> options)
         : base(options)
     {
     }
 
+    public virtual DbSet<Aifile> Aifiles { get; set; }
+
     public virtual DbSet<Application> Applications { get; set; }
 
     public virtual DbSet<Chat> Chats { get; set; }
-
-    public virtual DbSet<Data> Datas { get; set; }
 
     public virtual DbSet<Embedding> Embeddings { get; set; }
 
@@ -27,15 +27,37 @@ public partial class Hkcontext : DbContext
 
     public virtual DbSet<Qahistory> Qahistories { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=HKContext;Trusted_Connection=True;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Aifile>(entity =>
+        {
+            entity.ToTable("AIFiles");
+
+            entity.HasIndex(e => e.ApplicationId, "IX_AIFiles_ApplicationId");
+
+            entity.Property(e => e.AifileId).HasColumnName("AIFileId");
+            entity.Property(e => e.AifilePath).HasColumnName("AIFilePath");
+            entity.Property(e => e.AifileType).HasColumnName("AIFileType");
+
+            entity.HasOne(d => d.Application).WithMany(p => p.Aifiles)
+                .HasForeignKey(d => d.ApplicationId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
         modelBuilder.Entity<Application>(entity =>
         {
             entity.HasIndex(e => e.MemberId, "IX_Applications_MemberId");
 
-            entity.HasOne(d => d.Member).WithMany(p => p.Applications).HasForeignKey(d => d.MemberId);
+            entity.HasOne(d => d.Member).WithMany(p => p.Applications)
+                .HasForeignKey(d => d.MemberId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Chat>(entity =>
@@ -45,32 +67,23 @@ public partial class Hkcontext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Chats).HasForeignKey(d => d.UserId);
         });
 
-        modelBuilder.Entity<Data>(entity =>
-        {
-            entity.HasIndex(e => e.ApplicationId, "IX_Datas_ApplicationId");
-
-            entity.HasOne(d => d.Application).WithMany(p => p.Data).HasForeignKey(d => d.ApplicationId);
-        });
-
         modelBuilder.Entity<Embedding>(entity =>
         {
-            entity.HasKey(e => e.Index);
-
             entity.ToTable("Embedding");
 
-            entity.HasIndex(e => e.DataId, "IX_Embedding_DataId");
+            entity.HasIndex(e => e.AifileId, "IX_Embedding_AIFileId");
 
+            entity.Property(e => e.AifileId).HasColumnName("AIFileId");
             entity.Property(e => e.Qa).HasColumnName("QA");
-            entity.Property(e => e.Index).ValueGeneratedOnAdd();
 
-            entity.HasOne(d => d.Data).WithMany(p => p.Embeddings).HasForeignKey(d => d.DataId);
+            entity.HasOne(d => d.Aifile).WithMany(p => p.Embeddings)
+                .HasForeignKey(d => d.AifileId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Member>(entity =>
         {
             entity.ToTable("Member");
-
-            entity.Property(e => e.Apikey).HasColumnName("APIKey");
         });
 
         modelBuilder.Entity<Qahistory>(entity =>
@@ -84,14 +97,33 @@ public partial class Hkcontext : DbContext
             entity.Property(e => e.QahistoryQ).HasColumnName("QAHistoryQ");
             entity.Property(e => e.QahistoryVectors).HasColumnName("QAHistoryVectors");
 
-            entity.HasOne(d => d.Chat).WithMany(p => p.Qahistories).HasForeignKey(d => d.ChatId);
+            entity.HasOne(d => d.Chat).WithMany(p => p.Qahistories)
+                .HasForeignKey(d => d.ChatId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasMany(d => d.Users).WithMany(p => p.Roles)
+                .UsingEntity<Dictionary<string, object>>(
+                    "UserRole",
+                    r => r.HasOne<User>().WithMany().HasForeignKey("UserId"),
+                    l => l.HasOne<Role>().WithMany().HasForeignKey("RoleId"),
+                    j =>
+                    {
+                        j.HasKey("RoleId", "UserId");
+                        j.ToTable("UserRoles");
+                        j.HasIndex(new[] { "UserId" }, "IX_UserRoles_UserId");
+                    });
         });
 
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasIndex(e => e.ApplicationId, "IX_Users_ApplicationId");
 
-            entity.HasOne(d => d.Application).WithMany(p => p.Users).HasForeignKey(d => d.ApplicationId);
+            entity.HasOne(d => d.Application).WithMany(p => p.Users)
+                .HasForeignKey(d => d.ApplicationId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         OnModelCreatingPartial(modelBuilder);

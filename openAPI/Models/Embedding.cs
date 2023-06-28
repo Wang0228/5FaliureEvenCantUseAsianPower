@@ -5,7 +5,7 @@ namespace openAPI.Models;
 
 public partial class Embedding
 {
-    public string Index { get; set; } = null!;
+    public string EmbeddingId { get; set; } = null!;
 
     public string EmbeddingQuestion { get; set; } = null!;
 
@@ -15,7 +15,7 @@ public partial class Embedding
 
     public string EmbeddingVectors { get; set; } = null!;
 
-    public string DataId { get; set; } = null!;
+    public string? AifileId { get; set; }
 
-    public virtual Data Data { get; set; } = null!;
+    public virtual Aifile? Aifile { get; set; }
 }

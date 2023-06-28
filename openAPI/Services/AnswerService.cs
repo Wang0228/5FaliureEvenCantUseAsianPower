@@ -9,8 +9,8 @@ namespace openAPI.Services
 {
     public class AnswerService : IChatInterface
     {
-        private readonly Hkcontext _hkcontext;
-        public AnswerService(Hkcontext hkcontext)
+        private readonly HKContext _hkcontext;
+        public AnswerService(HKContext hkcontext)
         {
             _hkcontext = hkcontext;
         }

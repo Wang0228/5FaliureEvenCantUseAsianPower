@@ -10,8 +10,8 @@ namespace openAPI.Controllers
     [ApiController]
     public class TurboController : ControllerBase
     {
-        private readonly Hkcontext _hkcontext;
-        public TurboController(Hkcontext hkcontext)
+        private readonly HKContext _hkcontext;
+        public TurboController(HKContext hkcontext)
         {
             _hkcontext = hkcontext;
         }

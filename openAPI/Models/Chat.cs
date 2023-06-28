@@ -7,7 +7,7 @@ public partial class Chat
 {
     public string ChatId { get; set; } = null!;
 
-    public DateTime ChatData { get; set; }
+    public DateTime ChatTime { get; set; }
 
     public string ChatName { get; set; } = null!;
 

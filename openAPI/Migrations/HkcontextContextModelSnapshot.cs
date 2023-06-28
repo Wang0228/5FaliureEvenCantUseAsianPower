@@ -10,7 +10,7 @@ using openAPI.Models;
 
 namespace openAPI.Migrations
 {
-    [DbContext(typeof(Hkcontext))]
+    [DbContext(typeof(HKContext))]
     partial class HkcontextContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

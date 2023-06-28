@@ -8,7 +8,7 @@ using openAPI.Models;
 
 namespace openAPI.Migrations
 {
-    [DbContext(typeof(Hkcontext))]
+    [DbContext(typeof(HKContext))]
     [Migration("20230620091948_test")]
     partial class test
     {

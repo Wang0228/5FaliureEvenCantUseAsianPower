@@ -13,7 +13,7 @@ public partial class Qahistory
 
     public string QahistoryVectors { get; set; } = null!;
 
-    public string ChatId { get; set; } = null!;
+    public string? ChatId { get; set; }
 
-    public virtual Chat Chat { get; set; } = null!;
+    public virtual Chat? Chat { get; set; }
 }

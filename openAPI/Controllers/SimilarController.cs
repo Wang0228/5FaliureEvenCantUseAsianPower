@@ -10,9 +10,9 @@ namespace openAPI.Controllers
     [ApiController]
     public class SimilarController : ControllerBase//餘弦相似 輸入{"ChatId":"聊天室的ID","Question":"要問的問題","DataId":"餘弦要參照的DataId"}
     {
-        private readonly Hkcontext _hkcontext;
+        private readonly HKContext _hkcontext;
         private readonly AnswerService _AnswerService;
-        public SimilarController(Hkcontext hkcontext, EmbeddingController embedding, TurboController Turbo, AnswerService AnswerService)
+        public SimilarController(HKContext hkcontext, EmbeddingController embedding, TurboController Turbo, AnswerService AnswerService)
         {
             _hkcontext = hkcontext;
             _AnswerService = AnswerService;
@@ -80009,9 +80009,9 @@ namespace openAPI.Controllers
 
             List<float> Question_result = _AnswerService.Embedding(msg.Question);
 
-            List<GetData> Data = _hkcontext.Qahistories.Where(x => x.ChatId == "1").Select(x => new GetData { QA = x.QahistoryQ, Vector = x.QahistoryVectors }).ToList();
+            List<GetData> Data = _hkcontext.Embeddings.Where(x => x.AifileId == "1").Select(x => new GetData { QA = x.Qa, Vector = x.EmbeddingVectors}).ToList();
             float[] sim = new float[Data.Count];
-
+            
             for (int i = 0; i < Data.Count; i++)
             {
                 sim[i] = ExtensionVectorOperation.CosineSimilarity(Question_result, Data[i].Vector.Split(",").Select(float.Parse));
@@ -80028,7 +80028,9 @@ namespace openAPI.Controllers
             {
                 for (int i = 0; i < order.Length; i++)
                 {
-                    Anser_string += q[(int)order[i][0]];
+                    int num_index = (int)order[i][0];
+                    GetData dt = Data[num_index];
+                    Anser_string += dt.QA;
                 }
             }
             Application set = _hkcontext.Applications.FirstOrDefault(x => x.ApplicationId == msg.ApplicationId);
