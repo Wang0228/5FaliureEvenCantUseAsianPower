@@ -1,14 +1,9 @@
 ﻿using Azure.AI.OpenAI;
 using Azure;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using openAPI.Interfaces;
 using openAPI.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using openAPI.Models;
-using Microsoft.Extensions.Options;
-using NuGet.ContentModel;
 using Microsoft.CodeAnalysis;
-using System.Text;
 
 namespace openAPI.Services
 {
@@ -64,27 +59,25 @@ namespace openAPI.Services
             List<string> promptBuilder = new List<string>();
 
             string prompt = "";
-            prompt += $"    你是一個客服人員,問題不知道或不相關請回答\"無相關資料,請在營業時間聯絡客服人員\",你只能參照「」內的內容回答問題「{msg.Sim_Anser}」.只根據「」內的內容回答下面問題不要添加任何其他資訊:";
+            prompt += $"問題不知道或不相關請回答\"無相關資料,請在營業時間聯絡客服人員\",你只能參照「」內的內容回答問題「{msg.Sim_Anser}」.只根據「」內的內容回答下面問題不要添加任何其他資訊:";
 
 
 
-            foreach (var content in qahistory)
-            {
-                //promptBuilder.Append($"User: {content.QahistoryQ}");
-                //promptBuilder.Append($"Assistant: {content.QahistoryA}");
-            }
-
+            //foreach (var content in qahistory)
+            //{
+            //    prompt += content.QahistoryQ;
+            //    prompt += content.QahistoryA;
+            //}
             prompt += msg.Question;
-
 
             CompletionsOptions options = new CompletionsOptions()
             {
                 MaxTokens = 1000,
-                Temperature = (float)0.7,
+                Temperature = msg.temperature,
                 Prompts = {$"{prompt}"},
             };
-
-            Response<Completions> response = client.GetCompletionsAsync("text-ada-001",  options).GetAwaiter().GetResult();
+            
+            Response<Completions> response = client.GetCompletionsAsync(msg.Setting.Model,  options).GetAwaiter().GetResult();
 
             string completions = response.Value.Choices[0].Text.ToString();
 

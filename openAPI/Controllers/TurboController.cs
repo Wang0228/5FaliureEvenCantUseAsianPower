@@ -39,7 +39,7 @@ namespace openAPI.Controllers
                             options.Messages.Add(new ChatMessage(ChatRole.Assistant,content.QahistoryA));
                         };
             options.Messages.Add(new ChatMessage(ChatRole.User, msg.Question));
-            Response<ChatCompletions> responseWithoutStream = client.GetChatCompletionsAsync("TEST",options).GetAwaiter().GetResult();//azure的模型部屬名稱
+            Response<ChatCompletions> responseWithoutStream = client.GetChatCompletionsAsync("gpt-35-turbo", options).GetAwaiter().GetResult();//azure的模型部屬名稱
             
             string completions = responseWithoutStream.Value.Choices[0].Message.Content.ToString();
             TurboAnserModel Anser = new TurboAnserModel { Ans = completions };

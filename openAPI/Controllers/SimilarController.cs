@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using openAPI.Models;
-using Newtonsoft.Json;
 using openAPI.ViewModels;
-using Newtonsoft.Json.Linq;
+using openAPI.Services;
+using openAPI.Helper;
 
 namespace openAPI.Controllers
 {
@@ -11,23 +11,21 @@ namespace openAPI.Controllers
     public class SimilarController : ControllerBase//餘弦相似 輸入{"ChatId":"聊天室的ID","Question":"要問的問題","DataId":"餘弦要參照的DataId"}
     {
         private readonly Hkcontext _hkcontext;
-        private readonly EmbeddingController _embedding;
-        private readonly TurboController _Turbo;
-        public SimilarController(Hkcontext hkcontext, EmbeddingController embedding,TurboController Turbo)
+        private readonly AnswerService _AnswerService;
+        public SimilarController(Hkcontext hkcontext, EmbeddingController embedding, TurboController Turbo, AnswerService AnswerService)
         {
             _hkcontext = hkcontext;
-            _embedding = embedding;
-            _Turbo = Turbo;
+            _AnswerService = AnswerService;
         }
 
-       /// <summary>
-       /// test
-       /// </summary>
-       /// <param name="msg">name</param>
-       /// <param name="msg">id</param>
-       /// <returns>
-       /// 0
-       /// </returns>
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <param name="msg">name</param>
+        /// <param name="msg">id</param>
+        /// <returns>
+        /// 0
+        /// </returns>
         [HttpPost]
         public IActionResult Post([FromBody] SimilarModel msg)
         {
@@ -80009,47 +80007,17 @@ namespace openAPI.Controllers
 };
             string[] q = new string[] { "誰可以成為藍新金流Newebpay會員？	任何中華民國民法所規定具備完全行為能力之自然人或為商號、公司等依據中華民國法律成立之法人都可註冊成為藍新金流會員。", "成為藍新金流Newebpay會員需要付費嗎？	不需付費，目前無收取年費及設定費，僅收2種收手續費：交易手續費跟提領手續費，提領手續費每個月5次免手續費、第6次起每次10元手續費。", "如何加入個人會員？	無需檢附文件、紙本合約、繁複作業，簡易線上申請立即開通，請點擊以下註冊個人會員，依照欄位指示填寫即可。註冊個人會員 https://www.newebpay.com/main/registration", "如何加入企業會員？	無需檢附文件、紙本合約、繁複作業，簡易線上申請立即開通，請點擊以下註冊企業會員，依照欄位指示填寫即可。註冊企業會員 https://www.newebpay.com/company/company_procedures/add_company", "最多可以申請幾個會員？	每一個人或企業僅能申請一組會員資格。申請個人會員皆須具備一組身分證字號、一組行動電話號碼及一個電子信箱，並任一資料不得重覆使用；申請企業會員須俱備一組統一編號，並不得重覆使用。", "忘記帳號怎麼辦？	請連繫藍新金流Newebpay客服中心，將會有專人查詢處理。(客服信箱：cs @newebpay.com; 客服電話：02 - 2786 - 3655)", "忘記密碼怎麼辦？	請參閱以下會員身份之連結後，點選登入視窗介面中左下角【忘記密碼】連結並填入相關資訊以重設密碼。個人會員：https://www.newebpay.com/main/forget_password 企業會員：https://www.newebpay.com/main/forget_password/company_forget_password_page", "註冊個人會員時，手機或電子信箱已被使用 藍新金流平台同一個身分證字號，僅能受理一個會員帳號申請時使用，故無法重複註。請連繫藍新金流Newebpay客服中心，由客服人員為您查詢確認。客服信箱：cs @newebpay.com ； 客服電話：02 - 2786 - 3655", "企業會員功能 可自行開立商店使用信用卡支付、Web ATM、ATM轉帳、超商代碼繳費、條碼繳費等完整金流機制，並享有簡易快速收款功能，輕鬆整合處理收付帳款，即時掌握交易紀錄", "個人會員功能 可自行開立商店使用信用卡支付、Web ATM、ATM轉帳、超商代碼繳費、條碼繳費等完整金流機制，並享有簡易快速收款功能，輕鬆整合處理收付帳款，即時掌握交易紀錄。", "手續費說明 您可至 金流手續費一覽表 查看手續費定價。", "交易款項流程示意 付款方進行結帳付款，可以選擇: 1.信用卡收款通路為信用卡收單銀行。2.ATM轉帳收款通路為銀行。3.WebATM收款通路為銀行。4.超商代碼繳費收款通路為OK超商。5.條碼繳費收款通路為四大超商。款項撥入(專戶保管)藍新金流依合約天期撥款至收款方藍新金流帳戶，收款方發動提領至實體帳戶(藍新金流提供交易全程履約保證服務)", "交易履約保障機制 交易完成後藍新金流Newebpay將提供價金保管機制，同時保障付款方及收款方之權益。", "藍新金流帳戶 藍新金流Newebpay提供每位會員在本平台之專屬虛擬帳戶，用以提供會員方便統整及管理於使用本平台所產生之收付請／退款款項，且所有「藍新金流帳戶」之餘額皆受銀行足額履約保證。", "在藍新金流Newebpay交易安全嗎？	藍新金流Newebpay與華南銀行建立第三方履約保證機制，所有透過藍新金流Newebpay支付交易款項，在價金保管期間內，都會全額由銀行進行履約保證。", "藍新金流Newebpay價金保管安全嗎？	藍新金流Newebpay與華南銀行建立第三方履約保證機制，所有透過藍新金流Newebpay支付交易款項，在價金保管期間內，都會全額由銀行進行履約保證。", "任何程式語言環境都可以相容嗎？	採標準網頁通訊資料交換模式，無程式語言種類限制。", "是否有限制瀏覽器？	最佳支援瀏覽器 Chrome/ Firefox / Safari / IE9以上。", "各交易機制支付流程   \"1. 信用卡支付 付款方選擇信用卡方式支付，填入「信用卡卡號」、「卡片有效月年」、「卡片背面末三碼」、「付款通知信箱」確認交易明細後進行付款，系統將送出至銀行進行授權。2. WebATM 付款方選擇WebATM方式支付，需搭配晶片提款卡與讀卡機來進行交易，不限特定銀行，任何行庫的金融卡皆可使用。3.ATM 付款方選擇ATM方式支付一次性，介接即可連通臺灣銀行/台新銀行/華南銀行/兆豐銀行，於結帳時可自行選擇要對應的銀行，會產生一組虛擬帳號進行轉帳交易。 4.ezPay簡單付電子支付 付款方選擇ezPay簡單付方式支付時，買賣雙方需先為ezPay簡單付會員，方能進行交易。 5.超商代碼繳費 付款方選擇超商代碼繳費方式支付，於結帳時將會收到一組超商代碼，前往超商便利生活站機台 (如: 7-ELEVEN 門市 ibon 機台) 至代碼繳費功能輸入代碼，即可印出繳費單。 6.超商條碼繳費 付款方選擇超商條碼繳費方式支付，顧客以雷射印表機印出藍新金流所產出的條碼，前往超商櫃台即可完成繳費。\"", "付款方(持卡人)如何確認訂單交易是否有成功呢？	使用信用卡交易之成功或失敗訊息皆須以藍新金流Newebpay或收款方通知為主，如藍新金流Newebpay或收款方通知訂單未成立(如付款連線中斷或無法請款等。", "條碼繳費常見問題，繳費通路無法刷讀條碼繳費單應如何處理？	條碼品質不清晰，請重新列印，並建議使用雷射印表機。", "WebATM或ATM轉帳常見失敗原因  1、銀行代碼或轉帳帳號抄寫錯誤 2、超過繳費期限或金額錯誤 3、付款方支付之金融帳戶轉帳額度或次數限制", "我已完成付款，如要取消交易應如何辦理？	不論您使用任何方式完成付款，如付款完成後欲取消交易，您必須與交易收款方聯絡，由該收款方為您完成退款處理，任何繳款通路(ex: 銀行、超商等)皆不受理交易退款處理。", "我已完成付款，但遲遲未收到商品或收款方未履行服務，是否有其它管道可以協助我？	如收款方惡意不履行服務且您已取得「報案三聯單」或「消費者爭議申訴(調解)資料表」，您可提供任一爭議證明文件予藍新金流Newebpay，經藍新金流Newebpay查證後，將先行緩撥該筆款項予收款方，並依司法機關之終局判決或用戶間之和解文件作為返還或支付交易款項之依據。", "我要如何進行退款 ?   \"Q1. 信用卡交易：A :請登入藍新金流會員後，於銷售中心>銷售紀錄查詢>信用卡交易專用查詢，查詢出欲退款之交易後點選退款。(註：請於交易成立後，90天內完成退款操作) Q2.非信用卡交易： A: 非信用卡交易，無法在藍新金流平台進行退款，需請會員與消費者協商退款方式，進行退款。\"", "店到店與大宗寄倉的差異 店到店：單次交寄商品數量少，傾向選擇就近超商門市交寄商品。 大宗寄倉：訂單量大、單次交寄商品數量多，傾向一次性依規定方式直接將商品批量交寄物流中心。", "超商取貨付款 / 超商取貨不付款，有什麼不同 ? 超商取貨付款 : 買家至超商取件時，需同時支付商品貨款。超商取貨付款: 買家至超商取件時，需同時支付商品貨款。", "申請藍新金流物流服務，有資格限制嗎 ? 店到店：所有藍新金流個人 / 企業會員，均可申請啟用。大宗寄倉：僅限企業會員申請啟用。", "如何申請藍新金流 - 物流服務 ? 請參考以下連結商店使用步驟https ://www.newebpay.com/website/Page/content/logistic_step_by_step", "寄件後多久，商品會到達取貨超商門市 ? 正常情況將在賣家交寄商品後3 - 5個工作天抵達取貨超商門市。部分特殊門市運送時間可能將超過 5個工作天(如: 外島)。如遇國定假日、農曆春節、天然災害或其他不可抗力之因素，配送所需天數將順延。", "使用「店到店 / 大宗寄倉服務」寄送的包裹有價值上限嗎 ? 有訂單金額的限制嗎 ? 訂單金額需低於新台幣2萬元(含)。高於此金額，將無法使用店到店 / 大宗寄倉服務。", "超商門市寄 / 取件，包裝要注意哪些規定 ? 詳細的材積、寄送規格、違禁物品列表與寄件規範，請參閱以下連結：費用一覽與寄送規範https://www.newebpay.com/website/Page/content/logistic_step_by_step?ctnb", "商品到達取貨門市後，會如何通知買家取貨 ? 商品一到達取貨超商，且資訊系統已將貨態更新為送達取貨門市，將會立即發出通知信及簡訊給買家。", "超商門市或物流中心收件後(商品已交寄完成)，能取消或修改配送資料嗎 ? 商品包裹一經收件，即進入物流配送流程 無法取消配送 無法退款 無法變更寄件資訊 無法更換包裹內容物", "能夠變更買家的取貨門市嗎 ? 在未產生寄件代碼或列印寄貨單前，皆可進行變更取貨門市，若已產生寄件代碼或列印寄貨單，則無法進行變更。建議在商品確認寄件後，再取得寄件代碼或列印寄貨單。", "若已取得寄件代碼 / 列印寄貨單，交寄門市前買家突然要求修改配送資料，該如何處理 ? 若已取得寄件代碼 / 列印寄貨單，配送資料已無法修改，可請買家重新下單購買，並填寫正確的配送資料。原訂單將於寄件代碼逾期失效後，返還預付費用。若買家使用信用卡支付款項，請賣家於會員中心執行退款。若買家使用非信用卡支付款項，請自行與買家議定退款或其他寄取件方式。", "什麼是門市關店 ?    \"當超商門市遇歇業/裝潢/位移/更名/轉店號…等狀況時，物流廠商通知門市關店、無法配送。請於收到通知後盡速重選門市，於截止期限前完成。賣家變更門市說明：1. 至「會員專區 / 物流中心 / 異常訂單處理」頁面。2. 使用「商店訂單編號」、「藍新金流交易序號」或「寄件代碼」查詢此訂單。3. 點擊「重選門市」按鈕，前往超商地圖完成門市變更。", "買家變更門市說明：1.至「藍新金流官網 / 客服中心 / 物流貨態查詢專區」頁面。2.輸入藍新金流交易序號，點擊查詢按鈕。3. 點擊「重選取貨門市」按鈕，輸入取貨人電話完成身分驗證。4. 前往超商地圖完成門市變更。物流貨態查詢專區：https://www.newebpay.com/shipping/trace\"", "為何在選擇門市的電子地圖查詢系統內，無法找到仍在營運中的超商門市?	因為門市有可能近期即將要 歇業/裝潢/位移/更名/轉店號 等因素，加上門市無法掌握買家什麼時間會到門市去取貨，超商物流必需預留後續處理的時間。所以若看到有在營運的門市，但卻沒有出現在地圖上，請改選擇其他鄰近正常營運中的超商門市作為取貨門市。", "商品已完成交寄，但為什麼物流中心寄件管理頁面中的貨態仍是訂單處理中?	貨態的更新，取決於超商門市資訊系統的更新時間，若超過24小時仍未更新，請聯繫客服信箱並提供寄件收據，客服人員將協助確認，謝謝。", "若買家已收到取貨簡訊通知，但至取貨超商門市卻取不到商品，該如何處理?	請連繫藍新金流客服中心，將會有專人查詢處理。", "配送途中，貨件毀損或遺失之賠償及責任限制?	1. 配送途中商品若發生損毀或遺失，概依物流廠商之處理標準進行理賠，用戶知悉並同意本公司不負擔因此所致之任何損失、支出或費用，惟本公司將協助用戶與物流廠商進行溝通。2. 物流廠商對於本服務之各項運送、保管及賠償責任，僅對委託人發生效力，對於取件人及其他委託人以外之對象概不適用。3. 理賠限額依各物流廠商規定，詳情請參閱以下連結：", "買家未取退回，需要付退貨段的運費嗎?若不取回，會怎麼處理?	店到店：1. 買家未取貨導致退貨至寄件(指定退貨)門市，不需支付費用。2. 退貨至寄件(指定退貨)門市後，賣家超過七天未取貨，會再退回物流中心，賣家需於保管期限內申請宅配退貨(宅配費用需由賣家自行負擔，運費為貨到支付)。大宗寄倉：1. 買家未取貨導致退貨至物流中心，不需支付費用。2. 退貨至物流中心後，賣家未依退貨領取週期前往收取，則退件商品會以貨到付款方式送回賣方設定之退貨地址(宅配費用需由賣家自行負擔，運費為貨到支付)。3. 退貨驗收：賣方收回物品後，應立即核對物流中心隨貨提供之明細和數量是否一致，若有不同，請於3個工作天內通知物流中心進行查核，確認差異後由物流中心負責後續處理或賠償。若賣方收回物品超過3天未反應差異，事後發現差異則需由賣方自行負責。宅配退貨說明：1. 至「會員專區 / 物流中心 / 異常訂單處理」頁面。2. 使用「商店訂單編號」、「藍新金流交易序號」或「寄件代碼」查詢此訂單。3. 點擊「宅配退貨」按鈕，確認收件資訊，等待物流廠商宅配退回。", "買家已完成超商取貨付款，商家要多久才能收到買家支付的款項?	在買家完成超商取貨付款後，藍新金流將在買家付款日+10日撥款。", "什麼是預付費用?	藍新金流加值服務，使用預付方式收取服務費，預先存入，即可開始使用目前適用產品：物流服務費。請見「會員專區 / 帳務中心 / 預付費用 / 預付費用異動紀錄」頁面", "如何存入預付費用?	\"前往「會員專區 / 帳務中心 / 預付費用 / 預付費用異動紀錄」頁面，取得專屬轉帳帳號，進行存入動作。存入方式：1.實體ATM機台、網路App、WebATM及臺灣銀行以外之其他銀行臨櫃匯款。2.ATM轉帳交易，單筆訂單金額上限不得超過五萬元。3.臨櫃匯款入帳時間將依銀行實際匯款作業而定。4.匯款手續費由匯款方自行負擔\"", "什麼是專屬轉帳帳號?	藍新金流提供每位會員固定、專屬的臺灣銀行轉帳帳號，專供加值服務存入預付費用使用。請見「會員專區 / 帳務中心 / 預付費用 / 預付費用異動紀錄」頁面。", "存入的預付費用能拿回來嗎?	藍新金流提供「返還」機制，會員可自行將可用餘額返還至已驗證之金融帳戶。若會員已設定多個金融帳戶，可於返還時自行選擇欲使用的金融帳戶。申請預付費用返還，將於提出申請日(D)+20 天後 1-2 個工作日入金融機構帳號。每月可享五次免手續費優惠。請見「會員專區 / 帳務中心 / 預付費用 / 預付費用異動紀錄」頁面", "存入預付費用後，可用餘額沒有增加怎麼辦?	匯款入帳時間受銀行實際匯款作業時間影響。若超過四日仍未增加可用餘額，請聯繫客服信箱並提供匯款憑證，客服人員將協助確認，謝謝", "什麼是預付費用總額?什麼是在途圈存?什麼是可用餘額?	預付費用總額：預付費用總額 = 在途圈存+可用餘額。在途圈存：當會員已使用加值服務，但尚未實際執行，待服務完成後扣款。(如：物流已取得寄件代碼，但尚未交寄，交寄後執行扣款)。可用餘額：可用來使用加值服務的金額。請見「會員專區 / 帳務中心 / 預付費用 / 預付費用異動紀錄」頁面", "什麼是圈存返還?	\"當會員已使用加值服務，但未執行，達指定天期後返還圈存金額至可用餘額。物流服務費：1.店到店：取號未寄件D+10返還。2.大宗寄倉：取號未寄件D+20返還\"", "預付費用扣款後會有發票嗎？	會，本公司將於每月彙總所收取之服務費用，於次月提供電子發票予會員。" };
 
-            List<Embedding> data_embedding= _hkcontext.Embeddings.ToList();//取得資料
-            double[,] b=new double[test_data.GetLength(0), test_data.GetLength(1)];//定義DATA陣列長度
-                
-            double[] Question_Embedding = null;//使用者的問題向量
-            IActionResult Question_result = _embedding.Post(new EmbeddingModel { Q = msg.Question });//使用embedding post方法 將問題轉向量
-            if (Question_result is OkObjectResult result)
+            List<float> Question_result = _AnswerService.Embedding(msg.Question);
+
+            List<GetData> Data = _hkcontext.Qahistories.Where(x => x.ChatId == "1").Select(x => new GetData { QA = x.QahistoryQ, Vector = x.QahistoryVectors }).ToList();
+            float[] sim = new float[Data.Count];
+
+            for (int i = 0; i < Data.Count; i++)
             {
-                List<float> floatList = result.Value as List<float>;//取得float陣列
-                List<double> doubleList = floatList.Select(f => (double)f).ToList();
-                Question_Embedding = doubleList.ToArray();
-            }
-            else
-            {
-                return Content("問題轉向量錯誤");
+                sim[i] = ExtensionVectorOperation.CosineSimilarity(Question_result, Data[i].Vector.Split(",").Select(float.Parse));
             }
 
-            //int index = 0;
-            //int index2 = 0;
-            //foreach (var c in data_embedding)  勿刪
-            //{
-            //    string[] vec = ExtractValues(c.EmbeddingVectors);//正規化
-
-            //    foreach (var d in vec)
-            //    {
-            //        b[index2, index++] = double.Parse(d);//轉float
-            //    }
-            //    index2++;
-            //    index = 0;
-            //}
-            double[] sim = new double[test_data.GetLength(0)];
-            for(int i = 0; i < test_data.GetLength(0); i++)
-            {
-                double[] data_index = new double[test_data.GetLength(1)];
-                for(int l = 0; l < test_data.GetLength(1); l++)
-                {
-                    data_index[l] = test_data[i, l];
-                }
-                sim[i]= SimilarControllerHelpers.Similarity(data_index, Question_Embedding);
-            }
-            double[][] order = sim.Select((value, index) => new[] { index, value }).OrderByDescending(o => o[1]).Take(5).ToArray();
-            int[] num=new int[order.Length];
+            float[][] order = sim.Select((value, index) => new[] { index, value }).OrderByDescending(o => o[1]).Take(3).ToArray();
 
             string Anser_string = "";
             if (order[0][1] < 0.8)
@@ -80058,37 +80026,49 @@ namespace openAPI.Controllers
             }
             else
             {
-                for(int i=0;i<order.Length; i++)
+                for (int i = 0; i < order.Length; i++)
                 {
                     Anser_string += q[(int)order[i][0]];
                 }
             }
-            IActionResult actionResult = _Turbo.Turbo(new TurboModel { DataId=msg.DataId,Question = msg.Question, Sim_Anser = Anser_string, ChatId = msg.ChatId });
-            string Qahistory_A =JsonConvert.SerializeObject(((OkObjectResult)actionResult).Value);
-            JObject jobj=JObject.Parse(Qahistory_A);
-            string ans = jobj["Ans"].ToString();
-            string maxId;
-            if (_hkcontext.Qahistories.Any())
+            Application set = _hkcontext.Applications.FirstOrDefault(x => x.ApplicationId == msg.ApplicationId);
+            TurboModel Anser_Model = new TurboModel { DataId = msg.DataId, Question = msg.Question, Sim_Anser = Anser_string, Setting = set, temperature = msg.temperature, ChatId = msg.ChatId };
+            string ans = "";
+            if (set.Model == "gpt-35-turbo")
             {
-                maxId = $"H{int.Parse(_hkcontext.Qahistories.Max(q => q.QahistoryId).Substring(1)) + 1:D5}" ;
+                ans = _AnswerService.TurboChat(Anser_Model);
+
+            }
+            else if (set.Model == "text-davinci-003" || set.Model == "text-curie-001" || set.Model == "text-babbage-001" || set.Model == "text-ada-001")
+            {
+                ans = _AnswerService.OtherChat(Anser_Model);
             }
             else
             {
-                maxId = "H00001"; 
+                return Content("錯誤模型名稱");
+            }
+            string maxId;
+            if (_hkcontext.Qahistories.Any())
+            {
+                maxId = $"H{int.Parse(_hkcontext.Qahistories.Max(q => q.QahistoryId).Substring(1)) + 1:D5}";
+            }
+            else
+            {
+                maxId = "H00001";
             }
             Qahistory qahistory = new Qahistory()
             {
-                QahistoryId=maxId,
+                QahistoryId = maxId,
                 QahistoryQ = msg.Question,
                 QahistoryA = ans,
-                QahistoryVectors=string.Join(",", Question_Embedding),
+                QahistoryVectors = string.Join(",", Question_result),
                 ChatId = msg.ChatId
             };
-            
+
             _hkcontext.Add(qahistory);
             _hkcontext.SaveChanges();
-            return Ok(new TurboAnserModel { Ans=ans});
+            return Ok(new TurboAnserModel { Ans = ans });
         }
     }
-    
+
 }
