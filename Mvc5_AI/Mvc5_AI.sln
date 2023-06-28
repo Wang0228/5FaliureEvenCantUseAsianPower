@@ -5,7 +5,11 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvc5_AI", "Mvc5_AI\Mvc5_AI.csproj", "{C03FC6C4-13DC-48BF-8E51-AB2155ED5F02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "About", "About\About.csproj", "{EFCE5A57-269F-4486-BEA1-D74BB0DB323E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "About", "About\About.csproj", "{EFCE5A57-269F-4486-BEA1-D74BB0DB323E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7_Webapi", "Net7_Webapi\Net7_Webapi.csproj", "{750B3EF3-7B47-4238-9174-5A3C6C6019DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAPI", "OpenAPI\OpenAPI.csproj", "{48CD7ADD-CD34-4A70-B22B-6AB5E2C3561C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{EFCE5A57-269F-4486-BEA1-D74BB0DB323E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFCE5A57-269F-4486-BEA1-D74BB0DB323E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFCE5A57-269F-4486-BEA1-D74BB0DB323E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{750B3EF3-7B47-4238-9174-5A3C6C6019DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{750B3EF3-7B47-4238-9174-5A3C6C6019DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{750B3EF3-7B47-4238-9174-5A3C6C6019DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{750B3EF3-7B47-4238-9174-5A3C6C6019DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48CD7ADD-CD34-4A70-B22B-6AB5E2C3561C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48CD7ADD-CD34-4A70-B22B-6AB5E2C3561C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48CD7ADD-CD34-4A70-B22B-6AB5E2C3561C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48CD7ADD-CD34-4A70-B22B-6AB5E2C3561C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

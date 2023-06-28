@@ -1,18 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "WvLTEAUq11Yt9XDljyylMkr03Mqfv6re0caH6AoG+glwRipmW/5WR/UlXjb9MTDIMoquWaG7y/9jm67RL9XWvA==",
+  "dgSpecHash": "1etA55dsMKipUvOrxj1i8QPsVX3J7NwZtmmqRw+QO6xG9gDERfwPeYUjJD9hAr36L9Hw/9Os+o8MVkURPOT6PQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\a0966\\source\\repos\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
+  "projectFilePath": "C:\\Users\\Double.J\\source\\repos\\Wang0228\\5FaliureEvenCantUseAsianPower\\Mvc5_AI\\Mvc5_AI\\Mvc5_AI.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\a0966\\.nuget\\packages\\microsoft.owin\\4.2.2\\microsoft.owin.4.2.2.nupkg.sha512",
-    "C:\\Users\\a0966\\.nuget\\packages\\owin\\1.0.0\\owin.1.0.0.nupkg.sha512"
+    "C:\\Users\\Double.J\\.nuget\\packages\\microsoft.owin\\4.2.2\\microsoft.owin.4.2.2.nupkg.sha512",
+    "C:\\Users\\Double.J\\.nuget\\packages\\owin\\1.0.0\\owin.1.0.0.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "已使用 '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' 而非專案目標架構 'net5.0' 還原了套件 'Microsoft.Owin 4.2.2'。此套件與您的專案並非完全相容。",
+      "message": "已使用 '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' 而非專案目標架構 'net5.0' 還原了套件 'Microsoft.Owin 4.2.2'。此套件與您的專案並非完全相容。",
       "libraryId": "Microsoft.Owin",
       "targetGraphs": [
         "net5.0"
@@ -22,7 +22,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "已使用 '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' 而非專案目標架構 'net5.0' 還原了套件 'Owin 1.0.0'。此套件與您的專案並非完全相容。",
+      "message": "已使用 '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' 而非專案目標架構 'net5.0' 還原了套件 'Owin 1.0.0'。此套件與您的專案並非完全相容。",
       "libraryId": "Owin",
       "targetGraphs": [
         "net5.0"
