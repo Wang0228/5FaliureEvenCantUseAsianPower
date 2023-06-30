@@ -53,7 +53,7 @@ namespace openAPI.Controllers
             // 去除无用字
             string[] uselessWords = { "is", "some", "with", "it", "contains" };
 
-            for (int page = 1; page <= 197; page++) //reader.GetNumberOfPages()
+            for (int page = 1; page <= reader.NumberOfPages; page++) //reader.GetNumberOfPages()
             {
                 string text = PdfTextExtractor.GetTextFromPage(reader, page, new LocationTextExtractionStrategy()); // 讀取當頁的字
 
@@ -70,7 +70,7 @@ namespace openAPI.Controllers
 
 
             reader.Close();
-            
+
             foreach (var sentences in groupedSentences)
             {
                 string maxId;
@@ -82,11 +82,11 @@ namespace openAPI.Controllers
                 {
                     maxId = "E00001";
                 }
-                List<float> result = _answerService.Embedding(sentences);
-                _hkcontext.Embeddings.Add(new Embedding { EmbeddingId=maxId,AifileId="1",EmbeddingQuestion = "test", EmbeddingAnswer = "test", Qa = sentences, EmbeddingVectors = string.Join(",", result) });
+                var result = _answerService.EmbeddingAsync(sentences);
+                _hkcontext.Embeddings.Add(new Embedding { EmbeddingId = maxId, AifileId = "1", EmbeddingQuestion = "test", EmbeddingAnswer = "test", Qa = sentences, EmbeddingVectors = string.Join(",", result) });
                 _hkcontext.SaveChanges();
             }
             return Ok(groupedSentences);
         }
-    }    
+    }
 }

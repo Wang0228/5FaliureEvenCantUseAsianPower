@@ -3,10 +3,11 @@ using Azure;
 using openAPI.ViewModels;
 using openAPI.Models;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace openAPI.Services
 {
-    public class AnswerService 
+    public class AnswerService
     {
         private readonly HKContext _hkcontext;
         string endpoint = "https://hacker6.openai.azure.com/";
@@ -14,16 +15,16 @@ namespace openAPI.Services
         public AnswerService(HKContext hkcontext)
         {
             _hkcontext = hkcontext;
-            
+
         }
-        public List<float> Embedding(string q)
-        {   
+        public async Task<List<float>> EmbeddingAsync(string q)
+        {
             OpenAIClient client = new(new Uri(endpoint), new AzureKeyCredential(API_Key));
             var options = new EmbeddingsOptions(q);
-            List<float> client_embedding = client.GetEmbeddings("embedding", options).Value.Data[0].Embedding.ToList();
-            return client_embedding;
+            var client_embedding = await client.GetEmbeddingsAsync("embedding", options);
+            return client_embedding.Value.Data[0].Embedding.ToList();
         }
-        public string TurboChat(TurboModel msg)
+        public async Task<string> TurboChatAsync(TurboModel msg)
         {
             OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(API_Key));
 
@@ -40,23 +41,23 @@ namespace openAPI.Services
                 FrequencyPenalty = 0,
                 PresencePenalty = 0,
             };
-                foreach (var content in qahistory)
-                {
-                    options.Messages.Add(new ChatMessage(ChatRole.User, content.QahistoryQ));
-                    options.Messages.Add(new ChatMessage(ChatRole.Assistant, content.QahistoryA));
-                };
+            foreach (var content in qahistory)
+            {
+                options.Messages.Add(new ChatMessage(ChatRole.User, content.QahistoryQ));
+                options.Messages.Add(new ChatMessage(ChatRole.Assistant, content.QahistoryA));
+            };
             options.Messages.Add(new ChatMessage(ChatRole.User, msg.Question));
-            Response<ChatCompletions> responseWithoutStream = client.GetChatCompletionsAsync("gpt-35-turbo", options).GetAwaiter().GetResult();
+            Response<ChatCompletions> responseWithoutStream = await client.GetChatCompletionsAsync("gpt-35-turbo", options);
 
             string completions = responseWithoutStream.Value.Choices[0].Message.Content.ToString();
 
             return completions;
         }
-        public string OtherChat(TurboModel msg)
+        public async Task<string> OtherChatAsync(TurboModel msg)
         {
             OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(API_Key));
 
-            List<Qahistory> qahistory = _hkcontext.Qahistories.Where(x => x.ChatId == msg.ChatId).OrderByDescending(y => y.QahistoryId).Take(3).Reverse().ToList();
+            List<Qahistory> qahistory = await _hkcontext.Qahistories.Where(x => x.ChatId == msg.ChatId).OrderByDescending(y => y.QahistoryId).Take(3).Reverse().ToListAsync();
 
             string prompt = "";
             prompt += $"問題不知道或不相關請回答\"無相關資料,請在營業時間聯絡客服人員\",你只能參照「」內的內容回答問題「{msg.Sim_Anser}」.只根據「」內的內容回答下面問題不要添加任何其他資訊:";
@@ -74,10 +75,10 @@ namespace openAPI.Services
             {
                 MaxTokens = int.Parse(msg.Setting.Parameter),
                 Temperature = msg.temperature,
-                Prompts = {$"{prompt}"},
+                Prompts = { $"{prompt}" },
             };
-            
-            Response<Completions> response = client.GetCompletionsAsync(msg.Setting.Model,  options).GetAwaiter().GetResult();
+
+            Response<Completions> response = await client.GetCompletionsAsync(msg.Setting.Model, options);
 
             string completions = response.Value.Choices[0].Text.ToString();
 
