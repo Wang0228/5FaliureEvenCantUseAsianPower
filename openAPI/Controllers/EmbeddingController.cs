@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
 using Azure.AI.OpenAI;
-using Azure;
+using Microsoft.AspNetCore.Mvc;
 using openAPI.ViewModels;
-using Microsoft.AspNetCore.Http.HttpResults;
-using openAPI.Models;
 
 namespace openAPI.Controllers
 {
@@ -19,8 +17,8 @@ namespace openAPI.Controllers
             var client_embedding = client.GetEmbeddings("embedding", options).Value.Data[0].Embedding;
             return Ok(client_embedding);
         }
-        
+
     }
-    
-    
+
+
 }

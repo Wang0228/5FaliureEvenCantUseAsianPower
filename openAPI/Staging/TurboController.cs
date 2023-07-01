@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
 using Azure.AI.OpenAI;
-using Azure;
+using Microsoft.AspNetCore.Mvc;
 using openAPI.Models;
 using openAPI.ViewModels;
 
-namespace openAPI.Controllers
+namespace openAPI.Staging
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,9 +20,9 @@ namespace openAPI.Controllers
         {
             OpenAIClient client = new OpenAIClient(new Uri("https://hacker6.openai.azure.com/"), new AzureKeyCredential("50520d3c1ceb4e79aefe93a6550b9eba"));
 
-            List<Qahistory> qahistory = _hkcontext.Qahistories.Where(x=>x.ChatId == msg.ChatId).OrderByDescending(y=>y.QahistoryId).Take(3).Reverse().ToList();
+            List<Qahistory> qahistory = _hkcontext.Qahistories.Where(x => x.ChatId == msg.ChatId).OrderByDescending(y => y.QahistoryId).Take(3).Reverse().ToList();
             IList<ChatMessage> messages = new List<ChatMessage>();
-            
+
             var options = new ChatCompletionsOptions()
             {
                 Messages = { new ChatMessage(ChatRole.System, @"你是藍星金流的客服人員") ,
@@ -33,18 +33,18 @@ namespace openAPI.Controllers
                 FrequencyPenalty = 0,
                 PresencePenalty = 0,
             };
-            foreach(var content in qahistory)
-                        {
-                            options.Messages.Add(new ChatMessage(ChatRole.User, content.QahistoryQ));
-                            options.Messages.Add(new ChatMessage(ChatRole.Assistant,content.QahistoryA));
-                        };
+            foreach (var content in qahistory)
+            {
+                options.Messages.Add(new ChatMessage(ChatRole.User, content.QahistoryQ));
+                options.Messages.Add(new ChatMessage(ChatRole.Assistant, content.QahistoryA));
+            };
             options.Messages.Add(new ChatMessage(ChatRole.User, msg.Question));
             Response<ChatCompletions> responseWithoutStream = client.GetChatCompletionsAsync("gpt-35-turbo", options).GetAwaiter().GetResult();//azure的模型部屬名稱
-            
+
             string completions = responseWithoutStream.Value.Choices[0].Message.Content.ToString();
             TurboAnserModel Anser = new TurboAnserModel { Ans = completions };
             return Ok(Anser);
         }
     }
-    
+
 }

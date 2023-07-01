@@ -9,6 +9,6 @@ namespace openAPI.ViewModels
         public required string Sim_Anser { get; set; }
         public required Application Setting { get; set; }
         public required float temperature { get; set; }
-        public required string ChatId{ get; set; }
+        public required string ChatId { get; set; }
     }
 }

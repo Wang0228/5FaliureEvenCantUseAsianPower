@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using openAPI.Models;
-using openAPI.ViewModels;
-using openAPI.Services;
-using openAPI.Helper;
 using Microsoft.EntityFrameworkCore;
+using openAPI.Helper;
+using openAPI.Models;
+using openAPI.Services;
+using openAPI.ViewModels;
 
 namespace openAPI.Controllers
 {
@@ -43,10 +43,10 @@ namespace openAPI.Controllers
 
             //餘弦比對及排序取得相似最高
             float[] Sim = new float[Data.Count];
-            for (int i = 0; i < Data.Count; i++)
+            Parallel.For(0, Data.Count, i =>
             {
                 Sim[i] = ExtensionVectorOperation.CosineSimilarity(Question_result, Data[i].Vector.Split(",").Select(float.Parse));
-            }
+            });
             float[][] Order = Sim.Select((value, index) => new[] { index, value }).OrderByDescending(o => o[1]).Take(3).ToArray();
             //將於弦最高資料排成字串 生成答案用
             string Anser_string = "";

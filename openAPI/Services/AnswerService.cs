@@ -1,32 +1,32 @@
-﻿using Azure.AI.OpenAI;
-using Azure;
-using openAPI.ViewModels;
-using openAPI.Models;
+﻿using Azure;
+using Azure.AI.OpenAI;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using openAPI.Models;
+using openAPI.ViewModels;
 
 namespace openAPI.Services
 {
     public class AnswerService
     {
         private readonly HKContext _hkcontext;
-        string endpoint = "https://hacker6.openai.azure.com/";
-        string API_Key = "50520d3c1ceb4e79aefe93a6550b9eba";
-        public AnswerService(HKContext hkcontext)
+        private readonly IConfiguration _configuration;
+        public AnswerService(HKContext hkcontext, IConfiguration configuration)
         {
             _hkcontext = hkcontext;
-
+            _configuration = configuration;
         }
+        
         public async Task<List<float>> EmbeddingAsync(string q)
         {
-            OpenAIClient client = new(new Uri(endpoint), new AzureKeyCredential(API_Key));
+            OpenAIClient client = new(new Uri(_configuration["endpoint"]), new AzureKeyCredential(_configuration["API_Key"]));
             var options = new EmbeddingsOptions(q);
             var client_embedding = await client.GetEmbeddingsAsync("embedding", options);
             return client_embedding.Value.Data[0].Embedding.ToList();
         }
         public async Task<string> TurboChatAsync(TurboModel msg)
         {
-            OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(API_Key));
+            OpenAIClient client = new OpenAIClient(new Uri(_configuration["endpoint"]), new AzureKeyCredential(_configuration["API_Key"]));
 
             List<Qahistory> qahistory = _hkcontext.Qahistories.Where(x => x.ChatId == msg.ChatId).OrderByDescending(y => y.QahistoryId).Take(3).Reverse().ToList();
             IList<ChatMessage> messages = new List<ChatMessage>();
@@ -55,7 +55,7 @@ namespace openAPI.Services
         }
         public async Task<string> OtherChatAsync(TurboModel msg)
         {
-            OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(API_Key));
+            OpenAIClient client = new OpenAIClient(new Uri(_configuration["endpoint"]), new AzureKeyCredential(_configuration["API_Key"]));
 
             List<Qahistory> qahistory = await _hkcontext.Qahistories.Where(x => x.ChatId == msg.ChatId).OrderByDescending(y => y.QahistoryId).Take(3).Reverse().ToListAsync();
 

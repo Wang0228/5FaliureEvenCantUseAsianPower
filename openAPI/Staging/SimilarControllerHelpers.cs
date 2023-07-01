@@ -1,7 +1,4 @@
-﻿using Azure.AI.OpenAI;
-using Azure;
-using openAPI.ViewModels;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 internal static class SimilarControllerHelpers
 {

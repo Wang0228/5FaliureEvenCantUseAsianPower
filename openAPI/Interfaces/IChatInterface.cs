@@ -7,6 +7,6 @@ namespace openAPI.Interfaces
 
         string TurboChat(TurboModel model);
         string OtherChat(TurboModel model);
-        
+
     }
 }

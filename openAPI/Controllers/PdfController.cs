@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using iTextSharp.text.pdf;
+﻿using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
+using Microsoft.AspNetCore.Mvc;
 using openAPI.Models;
-using System.Text.RegularExpressions;
 using openAPI.Services;
+using System.Text.RegularExpressions;
 
 namespace openAPI.Controllers
 {
